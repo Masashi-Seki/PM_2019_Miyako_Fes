@@ -154,17 +154,21 @@ void ofApp::keyPressed(int key) {
 
 //--------------------------------------------------------------
 void ofApp::play() {
-	movie.play();
 	movie.setPaused(false);
 	qr.setPaused(true);
+	if (movie.getPosition() == 0.0f) {
+		movie.play();
+	}
 	cout << "play" << endl;
 }
 
 //--------------------------------------------------------------
 void ofApp::QR_play() {
-	qr.play();
 	qr.setPaused(false);
 	movie.setPaused(true);
+	if (qr.getPosition() == 0.0f) {
+		qr.play();
+	}
 	cout << "qr play" << endl;
 }
 
@@ -182,7 +186,7 @@ void ofApp::rewind() {
 	movie.setPosition(0.0);
 	qr.setPaused(true);
 	qr.setPosition(0.0);
-	videoType = 0;
+	videoType = 1;
 	movie_on = false;
 	cout << "rewind" << endl;
 }
