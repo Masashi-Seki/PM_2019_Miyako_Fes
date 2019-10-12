@@ -50,14 +50,14 @@ public:
 	ofxOscSender projector_A1, projector_B1, projector_B2, projector_C1, pa;
 	ofxOscReceiver receiver;
 
-	bool connectionState;
-	bool black;
-
 	string time;
 	ofTrueTypeFont verdana;
 
-	int width;
-	int height;
+	string s, m, h;
+	string then_s, then_m, then_h;
+
+	bool connectionState;
+	bool black;
 
 	int cnState_A1;
 	int cnState_B1;
@@ -65,8 +65,8 @@ public:
 	int cnState_C1;
 	int cnState_PA;
 
-	string s, m, h;
-	string then_s, then_m, then_h;
-
 	int frameCount;
+
+	//int width;
+	//int height;
 };
