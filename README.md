@@ -5,8 +5,8 @@
 
 ## --- wall ---
 
-### PM_master
+### PM_2019_master
  コントローラ（親機）のプログラム（addon:ofxOsc）
 
-### PM_slave
+### PM_2019_slave
  スレーブ（子機）のプログラム（addon:ofxOsc）
