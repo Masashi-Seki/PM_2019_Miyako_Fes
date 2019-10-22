@@ -78,11 +78,11 @@ void ofApp::update() {
 
 			if (pauseFlag == true) {
 				pause();
-				cout << "#0 " << endl;
+				//cout << "#0 " << endl;
 			}
 			else {
 				play();
-				cout << "#1 " << endl;
+				//cout << "#1 " << endl;
 			}
 
 			count_start = false;

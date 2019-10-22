@@ -92,15 +92,15 @@ void ofApp::update() {
 
 			if (pauseFlag == true) {
 				pause();
-				cout << "#0 " << endl;
+				//cout << "#0 " << endl;
 			}
 			else if (videoType == 1) {
 				play();
-				cout << "#1 " << endl;
+				//cout << "#1 " << endl;
 			}
 			else if (videoType == 2) {
 				QR_play();
-				cout << "#2 " << endl;
+				//cout << "#2 " << endl;
 			}
 
 			count_start = false;
@@ -118,11 +118,11 @@ void ofApp::draw() {
 		
 		if (videoType == 1) {
 			movie.draw(0, 0, width, height);
-			cout << "+1 ";
+			//cout << "+1 ";
 		}
 		else if (videoType == 2) {
 			qr.draw(0, 0, width, height);
-			cout << "+2 ";
+			//cout << "+2 ";
 		}
 	}
 
