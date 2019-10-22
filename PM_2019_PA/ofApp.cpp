@@ -94,8 +94,7 @@ void ofApp::update() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-	//debug
-	//cout << count_start << " " << framecount << " " << black << endl;
+	
 }
 
 //--------------------------------------------------------------
@@ -127,7 +126,7 @@ void ofApp::play() {
 	if (sound.getPosition() == 0.0f) {
 		sound.play();
 	}
-	cout << "play" << endl;	
+	cout << "play" << endl;
 }
 
 //--------------------------------------------------------------
