@@ -23,7 +23,7 @@
 
 #define IP_CONTROLLER "192.168.11.1" //IP address of controller
 
-#define PLAY_ADJUST 10 //frames
+#define PLAY_ADJUST 0 //frames
 
 class ofApp : public ofBaseApp {
 
