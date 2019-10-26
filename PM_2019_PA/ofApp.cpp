@@ -1,31 +1,31 @@
 /*
-* Tokyo Metropolitan University
-* Code of the projection show at Miyako fest.
-*
-* Code of the slave (PA).
-* Written by Masashi Seki
-*
-* 2019.10.12 Sat.
-*
-* -----
-* Set IP address of controller in ofApp.h
-* Change the device name of URL of function reply() in ofApp.cpp
-* -----
-*/
+ * Tokyo Metropolitan University
+ * Code of the projection show at Miyako fest.
+ *
+ * Code of the slave (PA).
+ * Written by Masashi Seki
+ *
+ * 2019.10.12 Sat.
+ *
+ * -----
+ * Set IP address of controller in ofApp.h
+ * Change the device name of URL of function reply() in ofApp.cpp
+ * -----
+ */
 
 #include "ofApp.h"
 
-//--------------------------------------------------------------
+ //--------------------------------------------------------------
 void ofApp::setup() {
 
 	ofHideCursor(); //win and mac
-					//CGDisplayHideCursor(NULL); //mac only
+	//CGDisplayHideCursor(NULL); //mac only
 
 	ofBackground(0, 0, 0);
 	ofSetFrameRate(60);
 
-	sound.load("xxx.mp3");
-	qr.load("yyy.mp3");
+	sound.load("sound1.mp3");
+	qr.load("sound2.mp3");
 	logo.load("pm2019_logo.png");
 
 	sound.setLoop(false);
@@ -35,16 +35,16 @@ void ofApp::setup() {
 	receiver.setup(PORT_TO_SLAVE);
 
 	count_start = false;
-	pauseFlag = true;
+	pauseFlag = false;
 	framecount = 0;
 	soundType = 0;
 
 	width = ofGetWidth();
 	height = ofGetHeight();
 
-	//-- movie start --
+	//-- sound start --
 	//count_start = true;
-	//videoType = 2;
+	//soundType = 2;
 }
 
 //--------------------------------------------------------------
@@ -124,20 +124,20 @@ void ofApp::draw() {
 void ofApp::keyPressed(int key) {
 	if (key == 'q') {
 		black = !black;
+		cout << "black:" << black << endl;
 	}
-	cout << "black:" << black << endl;
 
 	/*
 	if (key == 'p') {
-	count_start = true;
-	soundType = 1;
+		count_start = true;
+		soundType = 1;
 	}
 	else if (key == 's') {
-	count_start = true;
-	pauseFlag = true;
+		count_start = true;
+		pauseFlag = true;
 	}
 	else if (key == 'r') {
-	rewind();
+		rewind();
 	}
 	*/
 
@@ -199,7 +199,7 @@ void ofApp::reply() {
 	ofxOscMessage message;
 	message.setAddress("/pmap/connection/responce/PA"); //change URL according to device name.
 
-														//stalling
+	//stalling
 	for (int i = 0; i < 10000; i++);
 	sender.sendMessage(message);
 
