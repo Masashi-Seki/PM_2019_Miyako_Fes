@@ -2,7 +2,7 @@
  * Tokyo Metropolitan University
  * Code of the projection show at Miyako fest.
  *
- * Code of the slave (projector).
+ * Code of the slave (PA).
  * Written by Masashi Seki
  *
  * 2019.10.12 Sat.
@@ -21,7 +21,7 @@
 #define PORT_TO_SLAVE 8000
 #define PORT_TO_CONTROLLER 7000
 
-#define IP_CONTROLLER "192.168.11.4" //IP address of controller
+#define IP_CONTROLLER "192.168.11.1" //IP address of controller
 
 #define PLAY_ADJUST 10 //frames
 
@@ -34,6 +34,7 @@ public:
 	void keyPressed(int key);
 
 	void play();
+	void QR_play();
 	void pause();
 	void rewind();
 	void screenOff();
@@ -44,10 +45,15 @@ public:
 	ofxOscReceiver receiver;
 
 	ofSoundPlayer sound;
+	ofSoundPlayer qr;
+	ofImage logo;
 
 	bool black;
 	bool count_start;
 	bool pauseFlag;
 
 	int framecount;
+	int soundType;
+	int width;
+	int height;
 };
