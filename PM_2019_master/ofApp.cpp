@@ -5,7 +5,7 @@
  * Code of the controller.
  * Written by Masashi Seki
  *
- * 2019.8.3 Sat.
+ * 2019.10.26 Sat.
  *
  * -----
  * Set IP address of slaves in ofApp.h
@@ -36,9 +36,6 @@ void ofApp::setup() {
 
 	receiver.setup(PORT_TO_CONTROLLER);
 
-	//width = ofGetScreenWidth();
-	//height = ofGetScreenHeight();
-
 	cnState_A1 = 2; //0:..., 1:success, 2:failed
 	cnState_B1 = 2;
 	cnState_B2 = 2;
@@ -48,6 +45,7 @@ void ofApp::setup() {
 	connectionState = false;
 	frameCount = 0;
 	black = false;
+	margin = 50;
 }
 
 //--------------------------------------------------------------
@@ -55,6 +53,11 @@ void ofApp::update() {
 
 	getTime();
 
+	width = ofGetWidth();
+	height = ofGetHeight();
+	betweenLines = height / 17.0;
+	fontSize = height * 0.035;
+			
 	if (connectionState == true) {
 		frameCount++;
 
@@ -87,52 +90,58 @@ void ofApp::update() {
 //--------------------------------------------------------------
 void ofApp::draw() {
 
-	verdana.load("VerdanaRef.ttf", 30);
 	ofSetColor(30, 200, 200);
-	verdana.drawString(time, 530, 50);
+	verdana.load("VerdanaRef.ttf", fontSize);
+	verdana.drawString(time, 500, margin);
 
-	verdana.load("VerdanaRef.ttf", 40);
 	ofSetColor(30, 200, 200);
-	verdana.drawString("Connection", 50, 450);
+	verdana.load("VerdanaRef.ttf", fontSize * 1.4);
+	verdana.drawString("Media & Screen", 50, margin + betweenLines*2);
 
-	verdana.drawString("Media & Screen", 50, 150 - 40);
-
-	verdana.load("VerdanaRef.ttf", 30);
 	ofSetColor(30, 200, 200);
-	verdana.drawString("- Projector A1", 150, 550);
-	verdana.drawString("- Projector B1", 150, 600);
-	verdana.drawString("- Projector B2", 150, 650);
-	verdana.drawString("- Projector C1", 150, 700);
-	verdana.drawString("- PA", 150, 750);
+	verdana.load("VerdanaRef.ttf", fontSize);
+	verdana.drawString("+ Media Play", 90, margin + betweenLines * 3); verdana.drawString("'   '", 480, margin + betweenLines * 3);
+	verdana.drawString("+ Media Pause", 90, margin + betweenLines * 4); verdana.drawString("' p '", 480, margin + betweenLines * 4);
+	verdana.drawString("+ Media Rewind", 90, margin + betweenLines * 5); verdana.drawString("' r '", 480, margin + betweenLines * 5);
+	verdana.drawString("+ Screen Blind", 90, margin + betweenLines * 6); verdana.drawString("' q '", 480, margin + betweenLines * 6);
+	verdana.drawString("+ QR code play", 90, margin + betweenLines * 7); verdana.drawString("' g '", 480, margin + betweenLines * 7);
 
-	verdana.drawString("+ Media Play", 90, 200 - 40); verdana.drawString("'   '", 480, 200 - 40);
-	verdana.drawString("+ Media Pause", 90, 250 - 40); verdana.drawString("' p '", 480, 250 - 40);
-	verdana.drawString("+ Media Rewind", 90, 300 - 40); verdana.drawString("' r '", 480, 300 - 40);
-	verdana.drawString("+ Screen Blind", 90, 350 - 40); verdana.drawString("' q '", 480, 350 - 40);
-	verdana.drawString("+ QR code play", 90, 400 - 40); verdana.drawString("' g '", 480, 400 - 40);
+	ofSetColor(30, 200, 200);
+	verdana.load("VerdanaRef.ttf", fontSize * 1.4);
+	verdana.drawString("Connection", 50, margin + betweenLines * 9);
 
+	ofSetColor(30, 200, 200);
+	verdana.load("VerdanaRef.ttf", fontSize);
+	verdana.drawString("+ Connection Check", 90, margin + betweenLines * 10); verdana.drawString("' c '", 480, margin + betweenLines * 10);
 
-	verdana.drawString("+ Connection Check", 90, 500); verdana.drawString("' c '", 480, 500);
+	ofSetColor(30, 200, 200);
+	verdana.load("VerdanaRef.ttf", fontSize);
+	verdana.drawString("- Projector A", 150, margin + betweenLines * 11);
+	verdana.drawString("- Projector B1", 150, margin + betweenLines * 12);
+	verdana.drawString("- Projector B2", 150, margin + betweenLines * 13);
+	verdana.drawString("- Projector C", 150, margin + betweenLines * 14);
+	verdana.drawString("- PA", 150, margin + betweenLines * 15);
 
-	if (cnState_A1 == 1) { ofSetColor(0, 200, 100); verdana.drawString("success", 455, 550); }
-	else if (cnState_A1 == 2) { ofSetColor(200, 100, 0); verdana.drawString("failed", 470, 550); }
-	else if (cnState_A1 == 0) { ofSetColor(30, 200, 200); verdana.drawString("connecting...", 440, 550); }
+	verdana.load("VerdanaRef.ttf", fontSize);
+	if (cnState_A1 == 1) { ofSetColor(0, 200, 100); verdana.drawString("success", 455, margin + betweenLines * 11); }
+	else if (cnState_A1 == 2) { ofSetColor(200, 100, 0); verdana.drawString("failed", 470, margin + betweenLines * 11); }
+	else if (cnState_A1 == 0) { ofSetColor(30, 200, 200); verdana.drawString("connecting...", 440, margin + betweenLines * 11); }
 
-	if (cnState_B1 == 1) { ofSetColor(0, 200, 100); verdana.drawString("success", 455, 600); }
-	else if (cnState_B1 == 2) { ofSetColor(200, 100, 0); verdana.drawString("failed", 470, 600); }
-	else if (cnState_B1 == 0) { ofSetColor(30, 200, 200); verdana.drawString("connecting...", 440, 600); }
+	if (cnState_B1 == 1) { ofSetColor(0, 200, 100); verdana.drawString("success", 455, margin + betweenLines * 12); }
+	else if (cnState_B1 == 2) { ofSetColor(200, 100, 0); verdana.drawString("failed", 470, margin + betweenLines * 12); }
+	else if (cnState_B1 == 0) { ofSetColor(30, 200, 200); verdana.drawString("connecting...", 440, margin + betweenLines * 12); }
 
-	if (cnState_B2 == 1) { ofSetColor(0, 200, 100); verdana.drawString("success", 455, 650); }
-	else if (cnState_B2 == 2) { ofSetColor(200, 100, 0); verdana.drawString("failed", 470, 650); }
-	else if (cnState_B2 == 0) { ofSetColor(30, 200, 200); verdana.drawString("connecting...", 440, 650); }
+	if (cnState_B2 == 1) { ofSetColor(0, 200, 100); verdana.drawString("success", 455, margin + betweenLines * 13); }
+	else if (cnState_B2 == 2) { ofSetColor(200, 100, 0); verdana.drawString("failed", 470, margin + betweenLines * 13); }
+	else if (cnState_B2 == 0) { ofSetColor(30, 200, 200); verdana.drawString("connecting...", 440, margin + betweenLines * 13); }
 
-	if (cnState_C1 == 1) { ofSetColor(0, 200, 100); verdana.drawString("success", 455, 700); }
-	else if (cnState_C1 == 2) { ofSetColor(200, 100, 0); verdana.drawString("failed", 470, 700); }
-	else if (cnState_C1 == 0) { ofSetColor(30, 200, 200); verdana.drawString("connecting...", 440, 700); }
+	if (cnState_C1 == 1) { ofSetColor(0, 200, 100); verdana.drawString("success", 455, margin + betweenLines * 14); }
+	else if (cnState_C1 == 2) { ofSetColor(200, 100, 0); verdana.drawString("failed", 470, margin + betweenLines * 14); }
+	else if (cnState_C1 == 0) { ofSetColor(30, 200, 200); verdana.drawString("connecting...", 440, margin + betweenLines * 14); }
 
-	if (cnState_PA == 1) { ofSetColor(0, 200, 100); verdana.drawString("success", 455, 750); }
-	else if (cnState_PA == 2) { ofSetColor(200, 100, 0); verdana.drawString("failed", 470, 750); }
-	else if (cnState_PA == 0) { ofSetColor(30, 200, 200); verdana.drawString("connecting...", 440, 750); }
+	if (cnState_PA == 1) { ofSetColor(0, 200, 100); verdana.drawString("success", 455, margin + betweenLines * 15); }
+	else if (cnState_PA == 2) { ofSetColor(200, 100, 0); verdana.drawString("failed", 470, margin + betweenLines * 15); }
+	else if (cnState_PA == 0) { ofSetColor(30, 200, 200); verdana.drawString("connecting...", 440, margin + betweenLines * 15); }
 }
 
 //--------------------------------------------------------------
@@ -161,22 +170,18 @@ void ofApp::keyPressed(int key) {
 	switch (key) {
 	case 'c':
 		connectionCheck();
-		cout << "connection check" << endl;
 		break;
 
 	case ' ':
 		allPlay();
-		cout << "main play" << endl;
 		break;
 
 	case 'p':
 		allPause();
-		cout << "pause" << endl;
 		break;
 
 	case 'r':
 		allRewind();
-		cout << "rewind" << endl;
 		break;
 
 	case 'q':
@@ -184,12 +189,10 @@ void ofApp::keyPressed(int key) {
 		if (black == false) allScreenOn();
 		else if (black == true) allScreenOff();
 		else;
-		cout << "black: " << black << endl;
 		break;
 
 	case 'g':
 		allQR_Play();
-		cout << "qr play" << endl;
 		break;
 
 	default:

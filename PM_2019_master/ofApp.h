@@ -5,7 +5,7 @@
  * Code of the controller.
  * Written by Masashi Seki
  *
- * 2019.8.3 Sat.
+ * 2019.10.26 Sat.
  *
  * -----
  * Set IP address of slaves in ofApp.h
@@ -18,11 +18,11 @@
 #include "ofMain.h"
 #include "ofxOsc.h"
 
-#define IP_PROJECTOR_A1 "192.168.11.6"
-#define IP_PROJECTOR_B1 "192.168.11.2"
-#define IP_PROJECTOR_B2 "192.168.11.3"
+#define IP_PROJECTOR_A1 "192.168.11.2"
+#define IP_PROJECTOR_B1 "192.168.11.3"
+#define IP_PROJECTOR_B2 "192.168.11.4"
 #define IP_PROJECTOR_C1 "192.168.11.5"
-#define IP_PA			"192.168.11.1"
+#define IP_PA			"192.168.11.6"
 
 #define PORT_TO_SLAVE 8000
 #define PORT_TO_CONTROLLER 7000
@@ -50,14 +50,14 @@ public:
 	ofxOscSender projector_A1, projector_B1, projector_B2, projector_C1, pa;
 	ofxOscReceiver receiver;
 
+	bool connectionState;
+	bool black;
+
 	string time;
 	ofTrueTypeFont verdana;
 
-	string s, m, h;
-	string then_s, then_m, then_h;
-
-	bool connectionState;
-	bool black;
+	int width;
+	int height;
 
 	int cnState_A1;
 	int cnState_B1;
@@ -65,8 +65,13 @@ public:
 	int cnState_C1;
 	int cnState_PA;
 
+	string s, m, h;
+	string then_s, then_m, then_h;
+
 	int frameCount;
 
-	//int width;
-	//int height;
+	int betweenLines;
+	int margin;
+	int fontSize;
 };
+

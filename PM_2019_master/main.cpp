@@ -5,7 +5,7 @@
  * Code of the controller.
  * Written by Masashi Seki
  *
- * 2019.8.3 Sat.
+ * 2019.10.26 Sat.
  *
  * -----
  * Set IP address of slaves in ofApp.h
@@ -17,6 +17,6 @@
 #include "ofApp.h"
 
 int main() {
-	ofSetupOpenGL(700, 800, OF_WINDOW);
+	ofSetupOpenGL(670, 700, OF_WINDOW);
 	ofRunApp(new ofApp());
 }
