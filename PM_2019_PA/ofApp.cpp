@@ -113,9 +113,7 @@ void ofApp::draw() {
 	if (!black) {
 		logo.draw(0, 0);
 	}
-	else {
-		ofRectangle(0, 0, width, height);
-	}
+	
 	//debug
 	//cout << count_start << " " << framecount << " " << movie_on << " " << videoType << " " << black << endl;
 }
