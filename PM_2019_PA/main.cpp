@@ -2,7 +2,7 @@
  * Tokyo Metropolitan University
  * Code of the projection show at Miyako fest.
  *
- * Code of the slave (projector).
+ * Code of the slave (PA).
  * Written by Masashi Seki
  *
  * 2019.10.12 Sat.
@@ -18,7 +18,7 @@
 
  //========================================================================
 int main() {
-	ofSetupOpenGL(768, 768, OF_WINDOW);
+	ofSetupOpenGL(911, 911, OF_WINDOW);
 
 	ofRunApp(new ofApp());
 }
