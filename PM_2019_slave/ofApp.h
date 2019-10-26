@@ -21,7 +21,7 @@
 #define PORT_TO_SLAVE 8000
 #define PORT_TO_CONTROLLER 7000
 
-#define IP_CONTROLLER "192.168.11.4" //IP address of controller
+#define IP_CONTROLLER "192.168.11.1" //IP address of controller
 
 #define PLAY_ADJUST 0 //frames
 
