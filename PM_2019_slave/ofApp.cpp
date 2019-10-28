@@ -24,7 +24,7 @@ void ofApp::setup() {
 	ofBackground(0, 0, 0);
 	ofSetFrameRate(60);
 
-	movie.load("movie1.mov");
+	movie.load("movie1.mp4");
 	qr.load("movie2.mp4");
 
 	movie.setLoopState(OF_LOOP_NONE);
@@ -42,6 +42,11 @@ void ofApp::setup() {
 
 	width = ofGetWidth();
 	height = ofGetHeight();
+
+	//--- Malfunction Countermeasure add 10/28 ---
+	pause();
+	rewind();
+	//---
 
 	//-- movie start --
 	//count_start = true;
@@ -140,15 +145,15 @@ void ofApp::keyPressed(int key) {
 
 	/*
 	if (key == 'p') {
-		count_start = true;
-		videoType = 1;
+	count_start = true;
+	videoType = 1;
 	}
 	else if (key == 's') {
-		count_start = true;
-		pauseFlag = true;
+	count_start = true;
+	pauseFlag = true;
 	}
 	else if (key == 'r') {
-		rewind();
+	rewind();
 	}
 	*/
 }
