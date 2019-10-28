@@ -47,10 +47,6 @@ void ofApp::setup() {
 	pause();
 	rewind();
 	//---
-
-	//-- movie start --
-	//count_start = true;
-	//videoType = 2;
 }
 
 //--------------------------------------------------------------
