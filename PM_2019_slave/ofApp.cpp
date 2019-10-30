@@ -22,7 +22,7 @@ void ofApp::setup() {
 					//CGDisplayHideCursor(NULL); //mac only
 
 	ofBackground(0, 0, 0);
-	ofSetFrameRate(60);
+	ofSetFrameRate(30); //change frame rate to 30 fps
 
 	movie.load("movie1.mp4");
 	qr.load("movie2.mp4");
