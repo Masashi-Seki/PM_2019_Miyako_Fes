@@ -1,219 +1,227 @@
 /*
-* Tokyo Metropolitan University
-* Code of the projection show at Miyako fest.
-*
-* Code of the slave (projector).
-* Written by Masashi Seki
-*
-* 2019.10.12 Sat.
-*
-* -----
-* Set IP address of controller in ofApp.h
-* Change the device name of URL of function reply() in ofApp.cpp
-* -----
-*/
+ * Tokyo Metropolitan University
+ * Code of the projection show at Miyako fest.
+ *
+ * Code of the slave (projector).
+ * Written by Masashi Seki
+ *
+ * 2019.10.12 Sat.
+ *
+ * -----
+ * Set IP address of controller in ofApp.h
+ * Change the device name of URL of function reply() in ofApp.cpp
+ * -----
+ */
 
 #include "ofApp.h"
 
 //--------------------------------------------------------------
 void ofApp::setup() {
 
-	ofHideCursor(); //win and mac
-					//CGDisplayHideCursor(NULL); //mac only
+    ofHideCursor(); //win and mac
+    //CGDisplayHideCursor(NULL); //mac only
 
-	ofBackground(0, 0, 0);
-	ofSetFrameRate(30); //change frame rate to 30 fps
+    ofBackground(0, 0, 0);
+    ofSetFrameRate(30);
 
-	movie.load("movie1.mp4");
-	qr.load("movie2.mp4");
+    movie.load("movie1.mp4");
+    qr.load("movie2.mp4");
 
-	movie.setLoopState(OF_LOOP_NONE);
-	qr.setLoopState(OF_LOOP_NONE);
+    movie.setLoopState(OF_LOOP_NONE);
+    qr.setLoopState(OF_LOOP_NONE);
 
-	sender.setup(IP_CONTROLLER, PORT_TO_CONTROLLER);
-	receiver.setup(PORT_TO_SLAVE);
+    sender.setup(IP_CONTROLLER, PORT_TO_CONTROLLER);
+    receiver.setup(PORT_TO_SLAVE);
 
-	black = false;
-	movie_on = false;
-	count_start = false;
-	pauseFlag = false;
-	framecount = 0;
-	videoType = 0;
+    black = false;
+    movie_on = false;
+    count_start = false;
+    pauseFlag = false;
+    framecount = 0;
+    videoType = 0;
+    commandFlag = false;
 
-	width = ofGetWidth();
-	height = ofGetHeight();
+    width = ofGetWidth();
+    height = ofGetHeight();
 
-	//--- Malfunction Countermeasure add 10/28 ---
-	pause();
-	rewind();
-	//---
+    //--- Malfunction Countermeasure add 10/28 ---
+    pause();
+    rewind();
+    //---
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
 
-	movie.update();
-	qr.update();
+    if(commandFlag==false && (movie.isPlaying()==true || qr.isPlaying()==true)){
+        pause();
+        rewind();
+    }
 
-	while (receiver.hasWaitingMessages()) {
-		ofxOscMessage m;
-		receiver.getNextMessage(&m);
+    movie.update();
+    qr.update();
 
-		if (m.getAddress() == "/pmap/media/play") {
-			count_start = true;
-			videoType = 1;
-		}
-		else if (m.getAddress() == "/pmap/media/QR_play") {
-			count_start = true;
-			videoType = 2;
-		}
-		else if (m.getAddress() == "/pmap/media/pause") {
-			count_start = true;
-			pauseFlag = true;
-		}
-		else if (m.getAddress() == "/pmap/media/rewind") {
-			rewind();
-		}
-		else if (m.getAddress() == "/pmap/screen/off") {
-			screenOff();
-		}
-		else if (m.getAddress() == "/pmap/screen/on") {
-			screenOn();
-		}
-		else if (m.getAddress() == "/pmap/connection/ask") {
-			reply();
-		}
-	}
+    while (receiver.hasWaitingMessages()) {
+        ofxOscMessage m;
+        receiver.getNextMessage(&m);
 
-	if (count_start) {
+        if (m.getAddress() == "/pmap/media/play") {
+            count_start = true;
+            videoType = 1;
+        }
+        else if (m.getAddress() == "/pmap/media/QR_play") {
+            count_start = true;
+            videoType = 2;
+        }
+        else if (m.getAddress() == "/pmap/media/pause") {
+            count_start = true;
+            pauseFlag = true;
+        }
+        else if (m.getAddress() == "/pmap/media/rewind") {
+            rewind();
+        }
+        else if (m.getAddress() == "/pmap/screen/off") {
+            screenOff();
+        }
+        else if (m.getAddress() == "/pmap/screen/on") {
+            screenOn();
+        }
+        else if (m.getAddress() == "/pmap/connection/ask") {
+            reply();
+        }
+    }
 
-		framecount++;
+    if (count_start) {
 
-		if (framecount > PLAY_ADJUST) {
-			movie_on = true;
+        framecount++;
 
-			if (pauseFlag == true) {
-				pause();
-				//cout << "#0 " << endl;
-			}
-			else if (videoType == 1) {
-				play();
-				//cout << "#1 " << endl;
-			}
-			else if (videoType == 2) {
-				QR_play();
-				//cout << "#2 " << endl;
-			}
+        if (framecount > PLAY_ADJUST) {
+            movie_on = true;
 
-			count_start = false;
-			pauseFlag = false;
-			framecount = 0;
-		}
+            if (pauseFlag == true) {
+                pause();
+                //cout << "#0 " << endl;
+            }
+            else if (videoType == 1) {
+                play();
+                //cout << "#1 " << endl;
+            }
+            else if (videoType == 2) {
+                QR_play();
+                //cout << "#2 " << endl;
+            }
 
-	}
+            count_start = false;
+            pauseFlag = false;
+            framecount = 0;
+        }
+
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw() {
 
-	if (black == false && movie_on == true) {
+    if (black == false && movie_on == true) {
 
-		if (videoType == 1) {
-			movie.draw(0, 0, width, height);
-			//cout << "+1 ";
-		}
-		else if (videoType == 2) {
-			qr.draw(0, 0, width, height);
-			//cout << "+2 ";
-		}
-	}
+        if (videoType == 1) {
+            movie.draw(0, 0, width, height);
+            //cout << "+1 ";
+        }
+        else if (videoType == 2) {
+            qr.draw(0, 0, width, height);
+            //cout << "+2 ";
+        }
+    }
 
-	//debug
-	//cout << count_start << " " << framecount << " " << movie_on << " " << videoType << " " << black << endl;
+    //debug
+    //cout << count_start << " " << framecount << " " << movie_on << " " << videoType << " " << black << endl;
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
-	if (key == 'q') {
-		black = !black;
-		cout << "black:" << black << endl;
-	}
+    if (key == 'q') {
+        black = !black;
+        cout << "black:" << black << endl;
+    }
 
-	/*
-	if (key == 'p') {
-	count_start = true;
-	videoType = 1;
-	}
-	else if (key == 's') {
-	count_start = true;
-	pauseFlag = true;
-	}
-	else if (key == 'r') {
-	rewind();
-	}
-	*/
+    if (key == 'p') {
+        count_start = true;
+        videoType = 1;
+    }
+    else if (key == 's') {
+        count_start = true;
+        pauseFlag = true;
+    }
+    else if (key == 'r') {
+        rewind();
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::play() {
-	movie.setPaused(false);
-	qr.setPaused(true);
-	if (movie.getPosition() == 0.0f) {
-		movie.play();
-	}
-	cout << "play" << endl;
+    movie.setPaused(false);
+    qr.setPaused(true);
+    if (movie.getPosition() == 0.0f) {
+        movie.play();
+    }
+    commandFlag = true;
+    cout << "play" << endl;
 }
 
 //--------------------------------------------------------------
 void ofApp::QR_play() {
-	qr.setPaused(false);
-	movie.setPaused(true);
-	if (qr.getPosition() == 0.0f) {
-		qr.play();
-	}
-	cout << "qr play" << endl;
+    qr.setPaused(false);
+    movie.setPaused(true);
+    if (qr.getPosition() == 0.0f) {
+        qr.play();
+    }
+    commandFlag = true;
+    cout << "qr play" << endl;
 }
 
 //--------------------------------------------------------------
 void ofApp::pause() {
-	movie.setPaused(true);
-	qr.setPaused(true);
-	framecount = 0;
-	cout << "pause" << endl;
+    movie.setPaused(true);
+    qr.setPaused(true);
+    framecount = 0;
+    commandFlag = false;
+    cout << "pause" << endl;
 }
 
 //--------------------------------------------------------------
 void ofApp::rewind() {
-	movie.setPaused(true);
-	movie.setPosition(0.0);
-	qr.setPaused(true);
-	qr.setPosition(0.0);
-	videoType = 1;
-	movie_on = false;
-	cout << "rewind" << endl;
+    movie.setPaused(true);
+    movie.setPosition(0.0);
+    qr.setPaused(true);
+    qr.setPosition(0.0);
+    videoType = 1;
+    movie_on = false;
+    commandFlag = false;
+    cout << "rewind" << endl;
 }
 
 //--------------------------------------------------------------
 void ofApp::screenOff() {
-	black = true;
-	cout << "screen off" << endl;
+    black = true;
+    cout << "screen off" << endl;
 }
 
 //--------------------------------------------------------------
 void ofApp::screenOn() {
-	black = false;
-	cout << "screen on" << endl;
+    black = false;
+    cout << "screen on" << endl;
 }
 
 //--------------------------------------------------------------
 void ofApp::reply() {
-	// osc message
-	ofxOscMessage message;
-	message.setAddress("/pmap/connection/responce/A"); //change URL according to device name.
+    // osc message
+    ofxOscMessage message;
+    message.setAddress("/pmap/connection/responce/A"); //change URL according to device name.
 
-													   //stalling
-	for (int i = 0; i < 10000; i++);
-	sender.sendMessage(message);
+    //stalling
+    for (int i = 0; i < 10000; i++);
+    sender.sendMessage(message);
 
-	cout << "replay" << endl;
+    cout << "replay" << endl;
 }

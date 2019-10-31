@@ -56,4 +56,6 @@ public:
 	int videoType;
 	int width;
 	int height;
+
+	bool commandFlag;
 };
