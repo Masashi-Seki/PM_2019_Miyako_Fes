@@ -22,7 +22,7 @@ void ofApp::setup() {
 	//CGDisplayHideCursor(NULL); //mac only
 
 	ofBackground(0, 0, 0);
-	ofSetFrameRate(60);
+	ofSetFrameRate(30);
 
 	sound.load("sound1.mp3");
 	qr.load("sound2.mp3");
@@ -41,6 +41,9 @@ void ofApp::setup() {
 
 	width = ofGetWidth();
 	height = ofGetHeight();
+
+	pause();
+	rewind();
 
 	//-- sound start --
 	//count_start = true;
@@ -113,7 +116,7 @@ void ofApp::draw() {
 	if (!black) {
 		logo.draw(0, 0);
 	}
-	
+
 	//debug
 	//cout << count_start << " " << framecount << " " << movie_on << " " << videoType << " " << black << endl;
 }
