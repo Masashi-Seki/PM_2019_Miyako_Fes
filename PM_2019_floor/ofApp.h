@@ -13,7 +13,7 @@ class ofApp : public ofBaseApp{
 		void update();
 		void draw();
 
-		void reset();
+		void createRipple(int _no, ofPoint _pos, int _state, int _rippleNum);
 
 		void keyPressed(int key);
 		void keyReleased(int key);

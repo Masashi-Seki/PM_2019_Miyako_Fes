@@ -8,20 +8,29 @@
 class Hasu {
 public:
 
-	Hasu(ofPoint _pos); //コンストラクタ：引数：位置，半径，線の太さ，色
+	Hasu(string leafName_maru, string leafName_nami, string flowerName, ofPoint _pos, int _state); //コンストラクタ：引数：位置，半径，線の太さ，色
 	~Hasu(); //デストラクタ
-	void setState(bool _state);
 
 	void update();
 	void draw();
 
-	string fileName;
 	ofPoint pos;	//x,y座標
+	ofPoint noise;
 	float size;		//大きさ
 	bool stepOn;	//踏まれた判定
-	float speed;	//回転速度
 	float deg;		//回転角
-	bool state;		//状態 0;葉，1:花
-	int counter;
 
+	float x_deg;
+	float y_deg;
+
+	ofImage leaf_maru;
+	ofImage leaf_nami;
+	ofImage flower;
+
+	int state;
+
+	float impact;
+
+	float x_moveRate;
+	float y_moveRate;
 };

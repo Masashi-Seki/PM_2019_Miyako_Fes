@@ -2,6 +2,8 @@
 
 #include "ofApp.h"
 
+using namespace std;
+
 class Ripple {
 public:
 

@@ -34,6 +34,17 @@
 #define pos16_x 995
 #define pos16_y 905
 
+#define pos17_x 650
+#define pos17_y 560
+#define pos18_x 980
+#define pos18_y 535
+#define pos19_x 990
+#define pos19_y 345
+#define pos20_x 1000
+#define pos20_y 780
+#define pos21_x 1230
+#define pos21_y 550
+
 #define vertex1_x 953
 #define vertex1_y 128
 #define vertex2_x 1634
