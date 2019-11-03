@@ -4,7 +4,7 @@
 #include "Ripple.h"
 #include "point.h"
 #include "Hasu.h"
-//#include "Rect.h"
+#include "Sound.h"
 
 class ofApp : public ofBaseApp{
 

@@ -3,6 +3,7 @@
 vector<Ripple *> ripples; //インスタンス作成
 vector<Hasu *> hasus;
 vector<ofImage *> image;
+vector<Sound *> sound;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -31,6 +32,23 @@ void ofApp::setup(){
 	hasus.push_back(new Hasu("leaf_maru.png", "leaf_nami.png", "hasu_big_edit.png", ofPoint(pos19_x, pos19_y), 2));
 	hasus.push_back(new Hasu("leaf_maru.png", "leaf_nami.png", "hasu_big_edit.png", ofPoint(pos20_x, pos20_y), 2));
 	hasus.push_back(new Hasu("leaf_maru.png", "leaf_nami.png", "hasu_big_edit.png", ofPoint(pos21_x, pos21_y), 2));
+
+	sound.push_back(new Sound("poundScale_C.mp3"));
+	sound.push_back(new Sound("poundScale_Cs.mp3"));
+	sound.push_back(new Sound("poundScale_D.mp3"));
+	sound.push_back(new Sound("poundScale_Ds.mp3"));
+	sound.push_back(new Sound("poundScale_E.mp3"));
+	sound.push_back(new Sound("poundScale_F.mp3"));
+	sound.push_back(new Sound("poundScale_Fs.mp3"));
+	sound.push_back(new Sound("poundScale_G.mp3"));
+	sound.push_back(new Sound("poundScale_Gs.mp3"));
+	sound.push_back(new Sound("poundScale_A.mp3"));
+	sound.push_back(new Sound("poundScale_As.mp3"));
+	sound.push_back(new Sound("poundScale_H.mp3"));
+	sound.push_back(new Sound("poundScale_Chigh.mp3"));
+	sound.push_back(new Sound("poundChord_ADF.mp3"));
+	sound.push_back(new Sound("poundChord_HDG.mp3"));
+	sound.push_back(new Sound("poundChord_GDE.mp3"));
 	
 }
 
@@ -48,6 +66,10 @@ void ofApp::update(){
 
 	for (int i = 0; i < hasus.size(); i++) {
 		hasus[i]->update();
+	}
+
+	for (int i = 0; i < sound.size(); i++) {
+		sound[i]->update();
 	}
 }
 
@@ -82,18 +104,20 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 	if (key == 'm') {
-			createRipple(0, ofPoint(pos1_x, pos1_y), hasus[0]->state, ofRandom(3,5)); //No.，位置，state，輪の数
+		createRipple(0, ofPoint(pos1_x, pos1_y), hasus[0]->state, ofRandom(3, 5)); //No.，位置，state，輪の数
 	}
 }
 //--------------------------------------------------------------
 void ofApp::createRipple(int _no, ofPoint _pos, int _state, int _rippleNum) {
 	for (int i = 0; i < _rippleNum; i++) {
 		if(hasus[_no]->state == 2) //花
-			ripples.push_back(new Ripple(ofPoint(_pos.x, _pos.y), ofRandom(50, 100), 4, ofColor(ofRandom(70, 255), ofRandom(70, 255), 0)));
+			ripples.push_back(new Ripple(ofPoint(_pos.x, _pos.y), ofRandom(50, 100), 6, ofColor(ofRandom(70, 255), ofRandom(70, 255), 0)));
 		else //葉
-			ripples.push_back(new Ripple(ofPoint(_pos.x, _pos.y), ofRandom(50, 100), 4, ofColor(0, ofRandom(70, 255), ofRandom(70, 255))));
+			ripples.push_back(new Ripple(ofPoint(_pos.x, _pos.y), ofRandom(50, 100), 6, ofColor(0, ofRandom(70, 255), ofRandom(70, 255))));
 	}
 	hasus[_no]->stepOn = true;
+	sound[_no]->stepOn = true;
+	
 }
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
@@ -112,7 +136,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-	cout << x << " " << y << endl;
+
 }
 
 //--------------------------------------------------------------

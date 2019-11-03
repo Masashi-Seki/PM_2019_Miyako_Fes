@@ -24,8 +24,6 @@ Hasu::Hasu(string leafName_maru, string leafName_nami, string flowerName, ofPoin
 	x_moveRate = ofRandom(5, 10) / 10.0;
 	y_moveRate = ofRandom(5, 10) / 10.0;
 
-	cout << x_moveRate << "	" << y_moveRate << endl;
-
 	impact = 0;
 }
 
