@@ -1,7 +1,7 @@
 #include "Hasu.h"
 #include "ofApp.h"
 
-Hasu::Hasu(string _fileName, ofPoint _pos) {
+Hasu::Hasu(ofPoint _pos) {
 	fileName = _fileName;
 	pos = _pos;
 	deg = ofRandom(0, 360);

@@ -8,7 +8,7 @@
 class Hasu {
 public:
 
-	Hasu(string _fileName, ofPoint _pos); //コンストラクタ：引数：位置，半径，線の太さ，色
+	Hasu(ofPoint _pos); //コンストラクタ：引数：位置，半径，線の太さ，色
 	~Hasu(); //デストラクタ
 	void setState(bool _state);
 
