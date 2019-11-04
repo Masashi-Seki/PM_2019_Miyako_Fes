@@ -6,6 +6,7 @@
 #include "Hasu.h"
 #include "Sound.h"
 #include "Message.h"
+#include "Mask.h"
 
 class ofApp : public ofBaseApp{
 

@@ -5,6 +5,7 @@ vector<Hasu *> hasus;
 vector<ofImage *> image;
 vector<Sound *> sound;
 vector<Message *> message;
+vector<Mask *> mask;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -55,8 +56,9 @@ void ofApp::setup(){
 	message.push_back(new Message("message2.png", ofPoint(1250, 850), ofPoint(100, 850)));
 	message.push_back(new Message("message3.png", ofPoint(1250, 850), ofPoint(100, 850)));
 
-	messageType = 0;
+	mask.push_back(new Mask());
 
+	messageType = 0;
 	keyPressed('m');
 	/*
 	ofFill();
@@ -84,6 +86,10 @@ void ofApp::update(){
 
 	for (int i = 0; i < sound.size(); i++) {
 		sound[i]->update();
+	}
+
+	for (int i = 0; i < mask.size(); i++) {
+		mask[i]->update();
 	}
 }
 
@@ -121,6 +127,13 @@ void ofApp::draw(){
 	}
 	ofPopStyle();
 
+	//マスクの絵画
+	ofPushStyle();
+	for (int i = 0; i < mask.size(); i++) {
+		mask[i]->draw();
+	}
+	ofPopStyle();
+
 	
 }
 
@@ -128,6 +141,10 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
 	if (key == 'a') {
 		createRipple(0, ofPoint(pos1_x, pos1_y), hasus[0]->state, ofRandom(3, 5)); //No.，位置，state，輪の数
+	}
+
+	else if (key == 'q') {
+		mask[0]->black = !mask[0]->black;
 	}
 
 	else if (key == 'm') {
