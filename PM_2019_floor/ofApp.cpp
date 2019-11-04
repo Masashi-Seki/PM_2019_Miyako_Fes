@@ -4,6 +4,7 @@ vector<Ripple *> ripples; //インスタンス作成
 vector<Hasu *> hasus;
 vector<ofImage *> image;
 vector<Sound *> sound;
+vector<Message *> message;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -49,7 +50,20 @@ void ofApp::setup(){
 	sound.push_back(new Sound("poundChord_ADF.mp3"));
 	sound.push_back(new Sound("poundChord_HDG.mp3"));
 	sound.push_back(new Sound("poundChord_GDE.mp3"));
-	
+
+	message.push_back(new Message("message1.png", ofPoint(1250, 850), ofPoint(100, 850)));
+	message.push_back(new Message("message2.png", ofPoint(1250, 850), ofPoint(100, 850)));
+	message.push_back(new Message("message3.png", ofPoint(1250, 850), ofPoint(100, 850)));
+
+	messageType = 0;
+
+	keyPressed('m');
+	/*
+	ofFill();
+	ofSetColor(200, 200, 0);
+	ofRect(100, 900, 600, 150);
+	ofRect(1250, 900, 600, 150);
+	*/
 }
 
 //--------------------------------------------------------------
@@ -99,12 +113,47 @@ void ofApp::draw(){
 		hasus[i]->draw();
 	}
 	ofPopStyle();
+
+	//メッセージの絵画
+	ofPushStyle();
+	for (int i = 0; i < message.size(); i++) {
+		message[i]->draw();
+	}
+	ofPopStyle();
+
+	
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	if (key == 'm') {
+	if (key == 'a') {
 		createRipple(0, ofPoint(pos1_x, pos1_y), hasus[0]->state, ofRandom(3, 5)); //No.，位置，state，輪の数
+	}
+
+	else if (key == 'm') {
+
+		switch (messageType) {
+		case 0:
+			message[0]->state = true;
+			message[1]->state = false;
+			message[2]->state = false;
+			break;
+		case 1:
+			message[0]->state = false;
+			message[1]->state = true;
+			message[2]->state = false;
+			break;
+		case 2:
+			message[0]->state = false;
+			message[1]->state = false;
+			message[2]->state = true;
+			break;
+		default:
+			break;
+		}
+
+		messageType++;
+		if (messageType > 2) messageType = 0;
 	}
 }
 //--------------------------------------------------------------

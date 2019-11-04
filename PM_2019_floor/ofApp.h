@@ -5,6 +5,7 @@
 #include "point.h"
 #include "Hasu.h"
 #include "Sound.h"
+#include "Message.h"
 
 class ofApp : public ofBaseApp{
 
@@ -31,5 +32,6 @@ class ofApp : public ofBaseApp{
 		int getData;
 		ofVideoPlayer hasuike;
 		int resetCounter;
+		int messageType;
 
 };
