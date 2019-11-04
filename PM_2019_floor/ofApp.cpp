@@ -8,7 +8,7 @@ vector<Message *> message;
 vector<Mask *> mask;
 
 //--------------------------------------------------------------
-void ofApp::setup(){
+void ofApp::setup() {
 	ofBackground(75, 75, 75);
 
 	pondMask.load("pondMask.png");
@@ -73,7 +73,7 @@ void ofApp::setup(){
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
+void ofApp::update() {
 
 	for (int i = 0; i < ripples.size(); i++) {
 		ripples[i]->update();
@@ -98,7 +98,7 @@ void ofApp::update(){
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
+void ofApp::draw() {
 
 	/*
 	//枠の絵画
@@ -118,6 +118,13 @@ void ofApp::draw(){
 	//池マスクの絵画
 	pondMask.draw(0, 0);
 
+	//メッセージの絵画
+	ofPushStyle();
+	for (int i = 0; i < message.size(); i++) {
+		message[i]->draw();
+	}
+	ofPopStyle();
+
 	//波紋の絵画
 	ofPushStyle();
 	for (int i = 0; i < ripples.size(); i++) {
@@ -132,13 +139,6 @@ void ofApp::draw(){
 	}
 	ofPopStyle();
 
-	//メッセージの絵画
-	ofPushStyle();
-	for (int i = 0; i < message.size(); i++) {
-		message[i]->draw();
-	}
-	ofPopStyle();
-
 	//マスクの絵画
 	ofPushStyle();
 	for (int i = 0; i < mask.size(); i++) {
@@ -148,12 +148,9 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-	if (key == 'a') {
-		createRipple(0, ofPoint(pos1_x, pos1_y), hasus[0]->state, ofRandom(3, 5)); //No.，位置，state，輪の数
-	}
+void ofApp::keyPressed(int key) {
 
-	else if (key == 'q') {
+	if (key == 'q') {
 		mask[0]->black = !mask[0]->black;
 	}
 
@@ -182,65 +179,84 @@ void ofApp::keyPressed(int key){
 		messageType++;
 		if (messageType > 2) messageType = 0;
 	}
+
+	else if (key == '5') createRipple(0, ofPoint(pos1_x, pos1_y), hasus[0]->state, ofRandom(3, 5)); //No.，位置，state，輪の数
+	else if (key == '4') createRipple(1, ofPoint(pos2_x, pos2_y), hasus[1]->state, ofRandom(3, 5));
+	else if (key == '3') createRipple(2, ofPoint(pos3_x, pos3_y), hasus[2]->state, ofRandom(3, 5));
+	else if (key == '2') createRipple(3, ofPoint(pos4_x, pos4_y), hasus[3]->state, ofRandom(3, 5));
+	else if (key == 't') createRipple(4, ofPoint(pos5_x, pos5_y), hasus[4]->state, ofRandom(3, 5));
+	else if (key == 'r') createRipple(5, ofPoint(pos6_x, pos6_y), hasus[5]->state, ofRandom(3, 5));
+	else if (key == 'e') createRipple(6, ofPoint(pos7_x, pos7_y), hasus[6]->state, ofRandom(3, 5));
+	else if (key == 'w') createRipple(7, ofPoint(pos8_x, pos8_y), hasus[7]->state, ofRandom(3, 5));
+	else if (key == 'g') createRipple(8, ofPoint(pos9_x, pos9_y), hasus[8]->state, ofRandom(3, 5));
+	else if (key == 'f') createRipple(9, ofPoint(pos10_x, pos10_y), hasus[9]->state, ofRandom(3, 5));
+	else if (key == 'd') createRipple(10, ofPoint(pos11_x, pos11_y), hasus[10]->state, ofRandom(3, 5));
+	else if (key == 's') createRipple(11, ofPoint(pos12_x, pos12_y), hasus[11]->state, ofRandom(3, 5));
+	else if (key == 'b') createRipple(12, ofPoint(pos13_x, pos13_y), hasus[12]->state, ofRandom(3, 5));
+	else if (key == 'v') createRipple(13, ofPoint(pos14_x, pos14_y), hasus[13]->state, ofRandom(3, 5));
+	else if (key == 'c') createRipple(14, ofPoint(pos15_x, pos15_y), hasus[14]->state, ofRandom(3, 5));
+	else if (key == 'x') createRipple(15, ofPoint(pos16_x, pos16_y), hasus[15]->state, ofRandom(3, 5));
+
+
 }
 //--------------------------------------------------------------
 void ofApp::createRipple(int _no, ofPoint _pos, int _state, int _rippleNum) {
 	for (int i = 0; i < _rippleNum; i++) {
-		if(hasus[_no]->state == 2) //花
+		if (hasus[_no]->state == 2) //花
 			ripples.push_back(new Ripple(ofPoint(_pos.x, _pos.y), ofRandom(50, 100), 6, ofColor(ofRandom(70, 255), ofRandom(70, 255), 0)));
 		else //葉
 			ripples.push_back(new Ripple(ofPoint(_pos.x, _pos.y), ofRandom(50, 100), 6, ofColor(0, ofRandom(70, 255), ofRandom(70, 255))));
 	}
 	hasus[_no]->stepOn = true;
 	sound[_no]->stepOn = true;
-	
-}
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
 
 }
-
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
+void ofApp::keyReleased(int key) {
 
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
+void ofApp::mouseMoved(int x, int y) {
 
 }
 
 //--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
+void ofApp::mouseDragged(int x, int y, int button) {
 
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
+void ofApp::mousePressed(int x, int y, int button) {
 
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
+void ofApp::mouseReleased(int x, int y, int button) {
 
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
+void ofApp::mouseEntered(int x, int y) {
 
 }
 
 //--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
+void ofApp::mouseExited(int x, int y) {
 
 }
 
 //--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
+void ofApp::windowResized(int w, int h) {
 
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
+void ofApp::gotMessage(ofMessage msg) {
+
+}
+
+//--------------------------------------------------------------
+void ofApp::dragEvent(ofDragInfo dragInfo) {
 
 }
