@@ -53,7 +53,8 @@ void Hasu::draw() {
 
 	ofPushMatrix();
 	ofTranslate(pos.x, pos.y);
-	ofRotateDeg(deg);
+	//ofRotateDeg(deg); //win OK
+	ofRotate(deg); //mac
 	ofTranslate(-pos.x, -pos.y);
 	
 	if (state == 0) {

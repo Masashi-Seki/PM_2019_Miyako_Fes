@@ -1,6 +1,6 @@
-#include "ofApp.h"
+ï»¿#include "ofApp.h"
 
-vector<Ripple *> ripples; //ƒCƒ“ƒXƒ^ƒ“ƒXì¬
+vector<Ripple *> ripples; //ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ä½œæˆ
 vector<Hasu *> hasus;
 vector<ofImage *> image;
 vector<Sound *> sound;
@@ -11,11 +11,12 @@ vector<Mask *> mask;
 void ofApp::setup() {
 	ofBackground(75, 75, 75);
 
-	pondMask.load("pondMask.png");
-	water.load("water.mp4");
+	//pondMask.load("pondMask.png");
+	water.load("hasuike.mp4");
+	water.setLoopState(OF_LOOP_NORMAL);
 	water.play();
 
-	//hasus‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//hasusã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	hasus.push_back(new Hasu("leaf_maru.png", "leaf_nami.png", "hasu_big_edit.png", ofPoint(pos1_x, pos1_y), ofRandom(0, 2)));
 	hasus.push_back(new Hasu("leaf_maru.png", "leaf_nami.png", "hasu_big_edit.png", ofPoint(pos2_x, pos2_y), ofRandom(0, 2)));
 	hasus.push_back(new Hasu("leaf_maru.png", "leaf_nami.png", "hasu_big_edit.png", ofPoint(pos3_x, pos3_y), ofRandom(0, 2)));
@@ -64,21 +65,50 @@ void ofApp::setup() {
 
 	messageType = 0;
 	keyPressed('m');
-	/*
-	ofFill();
-	ofSetColor(200, 200, 0);
-	ofRect(100, 900, 600, 150);
-	ofRect(1250, 900, 600, 150);
-	*/
+
+	ofHideCursor();
+	//CGDisplayHideCursor(NULL);
+
+	ofSetFrameRate(60);
+	ofSetCircleResolution(150);
+	ofEnableSmoothing();
+
+	//serial.setup("COM3", 9600); //Win
+	serial.setup("/dev/tty.usbmodem1411",9600); //Mac
+
+	serial.writeByte(0xFF); //controller reset
+
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
 
+	water.update();
+
+	getData = 0;
+	getData = serial.readByte();
+
+	if (getData == 0x04) createRipple(0, ofPoint(pos1_x, pos1_y), hasus[0]->state, ofRandom(3, 5)); //No.ï¼Œä½ç½®ï¼Œstateï¼Œè¼ªã®æ•°
+	else if (getData == 0x08) createRipple(1, ofPoint(pos2_x, pos2_y), hasus[1]->state, ofRandom(3, 5));
+	else if (getData == 0x0C) createRipple(2, ofPoint(pos3_x, pos3_y), hasus[2]->state, ofRandom(3, 5));
+	else if (getData == 0x10) createRipple(3, ofPoint(pos4_x, pos4_y), hasus[3]->state, ofRandom(3, 5));
+	else if (getData == 0x03) createRipple(4, ofPoint(pos5_x, pos5_y), hasus[4]->state, ofRandom(3, 5));
+	else if (getData == 0x07) createRipple(5, ofPoint(pos6_x, pos6_y), hasus[5]->state, ofRandom(3, 5));
+	else if (getData == 0x0B) createRipple(6, ofPoint(pos7_x, pos7_y), hasus[6]->state, ofRandom(3, 5));
+	else if (getData == 0x0F) createRipple(7, ofPoint(pos8_x, pos8_y), hasus[7]->state, ofRandom(3, 5));
+	else if (getData == 0x02) createRipple(8, ofPoint(pos9_x, pos9_y), hasus[8]->state, ofRandom(3, 5));
+	else if (getData == 0x06) createRipple(9, ofPoint(pos10_x, pos10_y), hasus[9]->state, ofRandom(3, 5));
+	else if (getData == 0x0A) createRipple(10, ofPoint(pos11_x, pos11_y), hasus[10]->state, ofRandom(3, 5));
+	else if (getData == 0x0E) createRipple(11, ofPoint(pos12_x, pos12_y), hasus[11]->state, ofRandom(3, 5));
+	else if (getData == 0x01) createRipple(12, ofPoint(pos13_x, pos13_y), hasus[12]->state, ofRandom(3, 5));
+	else if (getData == 0x05) createRipple(13, ofPoint(pos14_x, pos14_y), hasus[13]->state, ofRandom(3, 5));
+	else if (getData == 0x09) createRipple(14, ofPoint(pos15_x, pos15_y), hasus[14]->state, ofRandom(3, 5));
+	else if (getData == 0x0D) createRipple(15, ofPoint(pos16_x, pos16_y), hasus[15]->state, ofRandom(3, 5));
+
 	for (int i = 0; i < ripples.size(); i++) {
 		ripples[i]->update();
 
-		//g‚¢I‚í‚Á‚½ƒƒ‚ƒŠ‚Í‰ğ•ú
+		//ä½¿ã„çµ‚ã‚ã£ãŸãƒ¡ãƒ¢ãƒªã¯è§£æ”¾
 		if (ripples[i]->dead == true) {
 			ripples.erase(ripples.begin() + i);
 		}
@@ -101,7 +131,7 @@ void ofApp::update() {
 void ofApp::draw() {
 
 	/*
-	//˜g‚ÌŠG‰æ
+	//æ ã®çµµç”»
 	ofPushStyle();
 	ofSetColor(255, 255, 255);
 	ofSetLineWidth(3);
@@ -112,34 +142,35 @@ void ofApp::draw() {
 	ofPopStyle();
 	*/
 
-	//“®‰æ‚ÌŠG‰æ
+	//å‹•ç”»ã®çµµç”»
 	water.draw(0, 0);
 
-	//’rƒ}ƒXƒN‚ÌŠG‰æ
+	/*
+	//æ± ãƒã‚¹ã‚¯ã®çµµç”»
 	pondMask.draw(0, 0);
-
-	//ƒƒbƒZ[ƒW‚ÌŠG‰æ
+	*/
+	//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®çµµç”»
 	ofPushStyle();
 	for (int i = 0; i < message.size(); i++) {
 		message[i]->draw();
 	}
 	ofPopStyle();
 
-	//”g–ä‚ÌŠG‰æ
+	//æ³¢ç´‹ã®çµµç”»
 	ofPushStyle();
 	for (int i = 0; i < ripples.size(); i++) {
 		ripples[i]->draw();
 	}
 	ofPopStyle();
 
-	//˜@‚ÌŠG‰æ
+	//è“®ã®çµµç”»
 	ofPushStyle();
 	for (int i = 0; i < hasus.size(); i++) {
 		hasus[i]->draw();
 	}
 	ofPopStyle();
 
-	//ƒ}ƒXƒN‚ÌŠG‰æ
+	//ãƒã‚¹ã‚¯ã®çµµç”»
 	ofPushStyle();
 	for (int i = 0; i < mask.size(); i++) {
 		mask[i]->draw();
@@ -180,7 +211,7 @@ void ofApp::keyPressed(int key) {
 		if (messageType > 2) messageType = 0;
 	}
 
-	else if (key == '5') createRipple(0, ofPoint(pos1_x, pos1_y), hasus[0]->state, ofRandom(3, 5)); //No.CˆÊ’uCstateC—Ö‚Ì”
+	else if (key == '5') createRipple(0, ofPoint(pos1_x, pos1_y), hasus[0]->state, ofRandom(3, 5)); //No.ï¼Œä½ç½®ï¼Œstateï¼Œè¼ªã®æ•°
 	else if (key == '4') createRipple(1, ofPoint(pos2_x, pos2_y), hasus[1]->state, ofRandom(3, 5));
 	else if (key == '3') createRipple(2, ofPoint(pos3_x, pos3_y), hasus[2]->state, ofRandom(3, 5));
 	else if (key == '2') createRipple(3, ofPoint(pos4_x, pos4_y), hasus[3]->state, ofRandom(3, 5));
@@ -202,9 +233,9 @@ void ofApp::keyPressed(int key) {
 //--------------------------------------------------------------
 void ofApp::createRipple(int _no, ofPoint _pos, int _state, int _rippleNum) {
 	for (int i = 0; i < _rippleNum; i++) {
-		if (hasus[_no]->state == 2) //‰Ô
+		if (hasus[_no]->state == 2) //èŠ±
 			ripples.push_back(new Ripple(ofPoint(_pos.x, _pos.y), ofRandom(50, 100), 6, ofColor(ofRandom(70, 255), ofRandom(70, 255), 0)));
-		else //—t
+		else //è‘‰
 			ripples.push_back(new Ripple(ofPoint(_pos.x, _pos.y), ofRandom(50, 100), 6, ofColor(0, ofRandom(70, 255), ofRandom(70, 255))));
 	}
 	hasus[_no]->stepOn = true;

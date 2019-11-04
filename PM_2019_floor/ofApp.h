@@ -29,7 +29,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		
-		//ofSerial serial; //シリアル通信のインスタンス
+		ofSerial serial;
 		int getData;
 		ofVideoPlayer hasuike;
 		ofVideoPlayer water;
