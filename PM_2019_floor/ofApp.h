@@ -32,6 +32,8 @@ class ofApp : public ofBaseApp{
 		//ofSerial serial; //シリアル通信のインスタンス
 		int getData;
 		ofVideoPlayer hasuike;
+		ofVideoPlayer water;
+		ofImage pondMask;
 		int resetCounter;
 		int messageType;
 

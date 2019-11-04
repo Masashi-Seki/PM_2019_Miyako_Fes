@@ -9,7 +9,11 @@ vector<Mask *> mask;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	ofBackground(0, 0, 0);
+	ofBackground(75, 75, 75);
+
+	pondMask.load("pondMask.png");
+	water.load("water.mp4");
+	water.play();
 
 	//hasus‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^
 	hasus.push_back(new Hasu("leaf_maru.png", "leaf_nami.png", "hasu_big_edit.png", ofPoint(pos1_x, pos1_y), ofRandom(0, 2)));
@@ -96,6 +100,7 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
+	/*
 	//˜g‚ÌŠG‰æ
 	ofPushStyle();
 	ofSetColor(255, 255, 255);
@@ -105,6 +110,13 @@ void ofApp::draw(){
 	ofLine(vertex3_x, vertex3_y, vertex4_x, vertex4_y);
 	ofLine(vertex4_x, vertex4_y, vertex1_x, vertex1_y);
 	ofPopStyle();
+	*/
+
+	//“®‰æ‚ÌŠG‰æ
+	water.draw(0, 0);
+
+	//’rƒ}ƒXƒN‚ÌŠG‰æ
+	pondMask.draw(0, 0);
 
 	//”g–ä‚ÌŠG‰æ
 	ofPushStyle();
@@ -133,8 +145,6 @@ void ofApp::draw(){
 		mask[i]->draw();
 	}
 	ofPopStyle();
-
-	
 }
 
 //--------------------------------------------------------------
