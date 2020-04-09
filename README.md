@@ -2,9 +2,6 @@
  Code of projection mapping at Miyako Fes 2019.
 
 # Description
-
-## --- wall ---
-
 ### PM_2019_master
  コントローラ（親機）のプログラム（addon:ofxOsc）
 
@@ -13,3 +10,7 @@
  
 ### PM_2019_PA
  PA（子機）のプログラム（addon:ofxOsc）
+ 
+### --- reference ---
+ PM2019引継ぎ資料_ソフト関係.pdfを参照
+ 
