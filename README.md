@@ -13,4 +13,6 @@
  
 ### --- reference ---
  PM2019引継ぎ資料_ソフト関係.pdfを参照
- 
+
+# Detailed explanation
+ https://www.masashi.tech/projectionmapping2019
